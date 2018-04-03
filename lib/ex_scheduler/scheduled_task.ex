@@ -44,18 +44,18 @@ defmodule ExScheduler.ScheduledTask do
       ret
     end
   end
+
   def handle_info(:run, state), do: handle_cast(:run, state)
+
   defp handle_run({:ok, %{completed_in: time}}, %{runs: runs} = state) do
     {:noreply, %State{state | runs: runs + 1, failures: 0, last_completed_in: time}}
   end
-
   defp handle_run({:error, error}, %{schedule: %{module: mod, max_failures: max_failures}, failures: failures} = state)
   when failures + 1 >= max_failures do
     Logger.error "[#{inspect mod}] scheduled task failed with: #{inspect error}, state: #{inspect state} "
 
     {:stop, :normal, state}
   end
-
   defp handle_run({:error, _error}, %{runs: runs, failures: failures, total_failures: total_failures} = state) do
     {:noreply, %State{state | runs: runs + 1, failures: failures + 1, total_failures: total_failures + 1}}
   end

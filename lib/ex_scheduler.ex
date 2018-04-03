@@ -2,8 +2,9 @@ defmodule ExScheduler do
   @moduledoc """
   Module providing a way to declare actions happening on an interval basis.
 
-  Example:
+  Example
 
+  ```
   defmodule Quiqup.Schedules.Developer do
     use ExScheduler
 
@@ -15,13 +16,18 @@ defmodule ExScheduler do
       Developer.drink(:coffee)
     end
   end
+  ```
 
   Supported options:
 
   # Intervals
-  `every`: - The interval on which to run the task
-  `first_in`: - How much time to wait before the first run, defaults to 0
+  `every`: The interval on which to run the task
 
+  `first_in`: How much time to wait before the first run, defaults to 0
+
+  Examples
+
+  ```
   schedule every: :millisecond, do: Task.execute # every millisecond
   schedule every: :second, do: Task.execute      # every second
   schedule every: :minute, do: Task.execute      # every minute
@@ -41,11 +47,16 @@ defmodule ExScheduler do
   schedule every: {2, :hours}, first_in: {20, :minutes} do
     Task.execute # every 2 hours first in 20 minutes
   end
+  ```
 
   # Failure handling
-  `:max_failures` - Number of times to fail for the task process to be restarted , defaults to `:infinity`
+  `:max_failures` - Number of times to fail for the task process to be restarted, defaults to `:infinity`
 
+  Examples
+
+  ```
   schedule every: {2, :days}, max_failures: 5, do: something
+  ```
   """
 
   defmacro __using__(_opts) do
@@ -77,14 +88,12 @@ defmodule ExScheduler do
       def namespace do
         self() |> Process.info([:links]) |> Access.get(:links) |> Enum.at(0) |> namespace
       end
-
       def namespace(server) when is_pid(server) do
         server
         |> Process.info([:registered_name])
         |> Access.get(:registered_name)
         |> namespace
       end
-
       def namespace(server) when is_atom(server) do
         size = (__MODULE__ |> to_string) |> byte_size
 
