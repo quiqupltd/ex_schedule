@@ -1,6 +1,6 @@
 # ExScheduler
 
-**TODO: Add description**
+This project provides a way to run tasks in an interval basis.
 
 ## Installation
 
@@ -15,7 +15,22 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/ex_scheduler](https://hexdocs.pm/ex_scheduler).
+## Getting Started
 
+After installation you can use the `ExScheduler` module and define the scheduled tasks using the `schedule` macro.
+
+### Example
+
+```elixir
+defmodule YourApp.Schedules.Developer do
+  use ExScheduler
+
+  schedule every: {6, :hours} do
+    Developer.eat(:pizza)
+  end
+
+  schedule every: :hour, first_in: {20, :minutes} do
+    Developer.drink(:coffee)
+  end
+end
+```
