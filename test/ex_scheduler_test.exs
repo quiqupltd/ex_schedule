@@ -57,7 +57,9 @@ defmodule ExSchedulerTest do
   setup do
     if Process.whereis(:test_schedule), do: Process.unregister(:test_schedule)
 
-    spawn_link(__MODULE__, :proxy, [self()]) |> Process.register(:schedule_test_proxy)
+    __MODULE__
+    |> spawn_link(:proxy, [self()])
+    |> Process.register(:schedule_test_proxy)
 
     on_exit fn ->
       if Process.whereis(:schedule_test_proxy), do: Process.unregister(:schedule_test_proxy)
@@ -69,10 +71,10 @@ defmodule ExSchedulerTest do
     test "returns the List of defined schedules" do
       expected = [
         %{interval: 100, first_in: 0},
-        %{interval: 86400000, first_in: 0},
-        %{interval: 86400000, first_in: 300},
-        %{interval: 86400000, first_in: 0},
-        %{interval: 86400000, first_in: 0},
+        %{interval: 86_400_000, first_in: 0},
+        %{interval: 86_400_000, first_in: 300},
+        %{interval: 86_400_000, first_in: 0},
+        %{interval: 86_400_000, first_in: 0},
         %{interval: 100, first_in: 0},
         %{interval: 100, first_in: 0}] |> Enum.reverse
 
@@ -107,13 +109,23 @@ defmodule ExSchedulerTest do
 
       {:ok, scheduler} = Subject.start_link([name: name])
 
-      assert Process.info(scheduler, :registered_name) |> elem(1) == name
+      scheduler_name =
+        scheduler
+        |> Process.info(:registered_name)
+        |> elem(1)
+
+      assert scheduler_name == name
     end
 
     test "when name is not given it registers the process with the module" do
       {:ok, scheduler} = Subject.start_link([])
 
-      assert Process.info(scheduler, :registered_name) |> elem(1) == ExSchedulerTest.TestSchedule
+      scheduler_name =
+        scheduler
+        |> Process.info(:registered_name)
+        |> elem(1)
+
+      assert scheduler_name == ExSchedulerTest.TestSchedule
     end
 
     test "when name and namespace are given it registers with the name" do
@@ -121,7 +133,12 @@ defmodule ExSchedulerTest do
 
       {:ok, scheduler} = Subject.start_link([name: name, namespace: "namespace"])
 
-      assert Process.info(scheduler, :registered_name) |> elem(1) == name
+      scheduler_name =
+        scheduler
+        |> Process.info(:registered_name)
+        |> elem(1)
+
+      assert scheduler_name == name
     end
 
     test "when namespace is given it registers with the module and the namespace" do
@@ -131,7 +148,12 @@ defmodule ExSchedulerTest do
 
       name = :"#{ExSchedulerTest.TestSchedule}.#{namespace}"
 
-      assert Process.info(scheduler, :registered_name) |> elem(1) == name
+      scheduler_name =
+        scheduler
+        |> Process.info(:registered_name)
+        |> elem(1)
+
+      assert scheduler_name == name
     end
   end
 
@@ -308,7 +330,8 @@ defmodule ExSchedulerTest do
   end
 
   defp find_task(scheduler, %{name: name}) do
-    Supervisor.which_children(scheduler)
+    scheduler
+    |> Supervisor.which_children()
     |> Stream.map(fn {_, pid, _, _} -> {pid, :sys.get_state(pid)} end)
     |> Enum.find(fn ({_, %{schedule: %{name: schedule_name}}}) -> schedule_name == name end)
   end
