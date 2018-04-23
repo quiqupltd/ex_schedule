@@ -34,3 +34,8 @@ defmodule YourApp.Schedules.Developer do
   end
 end
 ```
+
+### Authors
+
+- Dimitrios Zorbas (*[Zorbash](https://github.com/Zorbash)*)
+- Luiz Varela (*[LuizVarela](https://github.com/Luizvarela)*)
