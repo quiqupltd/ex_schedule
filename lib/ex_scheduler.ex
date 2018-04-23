@@ -70,12 +70,14 @@ defmodule ExScheduler do
       import ExScheduler
 
       @doc "Starts the Schedule with the given arguments"
-      @spec start_link(list()) :: GenServer.on_start
+      @spec start_link(list()) :: GenServer.on_start()
       def start_link(opts) do
         with namespace <- normalize_namespace(opts[:namespace]) do
-          Supervisor.start_link(__MODULE__,
-                                put_in(opts[:namespace], namespace),
-                                name: name(opts[:name], namespace))
+          Supervisor.start_link(
+            __MODULE__,
+            put_in(opts[:namespace], namespace),
+            name: name(opts[:name], namespace)
+          )
         end
       end
 
@@ -88,14 +90,16 @@ defmodule ExScheduler do
       def namespace do
         self() |> Process.info([:links]) |> Access.get(:links) |> Enum.at(0) |> namespace
       end
+
       def namespace(server) when is_pid(server) do
         server
         |> Process.info([:registered_name])
         |> Access.get(:registered_name)
         |> namespace
       end
+
       def namespace(server) when is_atom(server) do
-        size = (__MODULE__ |> to_string) |> byte_size
+        size = __MODULE__ |> to_string |> byte_size
 
         case server |> to_string do
           <<_module::bytes-size(size)>> <> "." <> namespace -> normalize_namespace(namespace)
@@ -133,23 +137,25 @@ defmodule ExScheduler do
   end
 
   @doc "A macro that defines a recurrent task"
-  @spec schedule(list(), list())  :: tuple()
+  @spec schedule(list(), list()) :: tuple()
   defmacro schedule(options, do: expression) do
     id = make_ref() |> inspect
 
     quote do
       def handle_task(unquote(id)), do: unquote(expression)
 
-      @schedules Macro.escape(%{id: unquote(id),
-                                module: __MODULE__,
-                                name: unquote(options)[:name],
-                                max_failures: (unquote(options)[:max_failures] || :infinity),
-                                interval: ExScheduler.interval(unquote(options)[:every]),
-                                first_in: ExScheduler.interval(unquote(options)[:first_in]) || 0})
+      @schedules Macro.escape(%{
+                   id: unquote(id),
+                   module: __MODULE__,
+                   name: unquote(options)[:name],
+                   max_failures: unquote(options)[:max_failures] || :infinity,
+                   interval: ExScheduler.interval(unquote(options)[:every]),
+                   first_in: ExScheduler.interval(unquote(options)[:first_in]) || 0
+                 })
     end
   end
 
-  def interval(n) when n in [nil, 0] , do: 0
+  def interval(n) when n in [nil, 0], do: 0
   def interval(n) when is_number(n), do: n * 1000
   def interval({_, :millisecond}), do: 1
   def interval({n, :milliseconds}), do: n
@@ -157,10 +163,12 @@ defmodule ExScheduler do
   def interval(:minute), do: interval({1, :minutes})
   def interval(:hour), do: interval({1, :hours})
   def interval(:day), do: interval({24, :hours})
+
   def interval({1, duration}) when duration in [:second, :minute, :hour, :day] do
-    apply __MODULE__, :interval, [duration]
+    apply(__MODULE__, :interval, [duration])
   end
+
   def interval({n, duration}) when duration in [:seconds, :minutes, :hours] do
-    apply :timer, duration, [n]
+    apply(:timer, duration, [n])
   end
 end
