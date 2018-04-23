@@ -65,10 +65,8 @@ defmodule ExScheduler.ScheduledTask do
   end
 
   defp timed_call(f) do
-    try do
-      {:ok, %{completed_in: ((f |> :timer.tc |> elem(0)) / 1_000_000)}}
-    rescue
-      e -> {:error, e}
-    end
+    {:ok, %{completed_in: ((f |> :timer.tc |> elem(0)) / 1_000_000)}}
+  rescue
+    e -> {:error, e}
   end
 end
