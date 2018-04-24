@@ -1,6 +1,12 @@
 # ExSchedule
 
+[![Package Version](https://img.shields.io/hexpm/v/ex_schedule.svg)](https://hex.pm/packages/ex_schedule)
+
 This project provides a way to run tasks in an interval basis.
+
+## Documentation
+
+* [hexdocs][hexdocs]
 
 ## Installation
 
@@ -44,3 +50,5 @@ end
 
 Copyright (c) 2018 Quiqup LTD, MIT License.
 See [LICENSE.txt](https://github.com/QuiqUpLTD/ex_schedule/blob/master/LICENSE.txt) for further details.
+
+[hexdocs]: https://hexdocs.pm/ex_schedule/0.1.0/ExSchedule.html

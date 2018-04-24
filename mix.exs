@@ -8,22 +8,33 @@ defmodule ExSchedule.Mixfile do
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      name: "ExSchedule"
+      name: "ExSchedule",
+      package: package(),
+      description: description()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 0.9.1", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  defp description, do: "Library to run tasks in an interval basis"
+
+  defp package do
+    [
+      files: ["lib", "mix.exs", "README.md", ".formatter.exs"],
+      maintainers: ["Dimitris Zorbas", "Luiz Varela"],
+      licenses: ["MIT"],
+      links: %{github: "https://github.com/QuiqUpLTD/ex_schedule"}
     ]
   end
 end
