@@ -1,6 +1,8 @@
 # ExSchedule
 
+[![Build Status](https://travis-ci.org/QuiqUpLTD/ex_schedule.svg?branch=master)](https://travis-ci.org/QuiqUpLTD/ex_schedule)
 [![Package Version](https://img.shields.io/hexpm/v/ex_schedule.svg)](https://hex.pm/packages/ex_schedule)
+[![Coverage Status](https://coveralls.io/repos/github/QuiqUpLTD/ex_schedule/badge.svg?branch=master)](https://coveralls.io/github/QuiqUpLTD/ex_schedule?branch=master)
 
 This project provides a way to run tasks in an interval basis.
 
