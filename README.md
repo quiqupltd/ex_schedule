@@ -39,3 +39,8 @@ end
 
 - Dimitrios Zorbas (*[Zorbash](https://github.com/Zorbash)*)
 - Luiz Varela (*[LuizVarela](https://github.com/Luizvarela)*)
+
+## License
+
+Copyright (c) 2018 Quiqup LTD, MIT License.
+See [LICENSE.txt](https://github.com/QuiqUpLTD/ex_schedule/blob/master/LICENSE.txt) for further details.
