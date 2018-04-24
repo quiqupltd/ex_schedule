@@ -1,7 +1,7 @@
-defmodule ExScheduler.ScheduledTask do
+defmodule ExSchedule.ScheduledTask do
   @moduledoc """
   Module responsible to isolate in a process, each recurring event declared
-  with ExScheduler.Schedule.
+  with ExSchedule.Schedule.
   """
 
   defmodule State do

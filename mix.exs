@@ -1,14 +1,14 @@
-defmodule ExScheduler.Mixfile do
+defmodule ExSchedule.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :ex_scheduler,
+      app: :ex_schedule,
       version: "0.1.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      name: "ExScheduler"
+      name: "ExSchedule"
     ]
   end
 

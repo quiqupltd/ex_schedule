@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure your application as:
 #
-#     config :ex_scheduler, key: :value
+#     config :ex_schedule, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:ex_scheduler, :key)
+#     Application.get_env(:ex_schedule, :key)
 #
 # You can also configure a 3rd-party app:
 #

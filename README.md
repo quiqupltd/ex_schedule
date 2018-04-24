@@ -1,29 +1,29 @@
-# ExScheduler
+# ExSchedule
 
 This project provides a way to run tasks in an interval basis.
 
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ex_scheduler` to your list of dependencies in `mix.exs`:
+by adding `ex_schedule` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:ex_scheduler, "~> 0.1.0"}
+    {:ex_schedule, "~> 0.1.0"}
   ]
 end
 ```
 
 ## Getting Started
 
-After installation you can use the `ExScheduler` module and define the scheduled tasks using the `schedule` macro.
+After installation you can use the `ExSchedule` module and define the scheduled tasks using the `schedule` macro.
 
 ### Example
 
 ```elixir
 defmodule YourApp.Schedules.Developer do
-  use ExScheduler
+  use ExSchedule
 
   schedule every: {6, :hours} do
     Developer.eat(:pizza)

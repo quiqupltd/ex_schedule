@@ -5,7 +5,7 @@ For bug reports please fill the following info:
 
 ### Environment
 
-* ExScheduler version:
+* ExSchedule version:
 * Elixir / Hex version (mix hex.info):
 * Operating system:
 

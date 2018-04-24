@@ -1,10 +1,10 @@
-defmodule ExSchedulerTest do
+defmodule ExScheduleTest do
   use ExUnit.Case, async: false
 
   import ExUnit.CaptureLog
 
   defmodule TestSchedule do
-    use ExScheduler
+    use ExSchedule
 
     schedule name: :tight_schedule, every: {100, :milliseconds} do
       with proxy <- Process.whereis(:schedule_test_proxy) do
@@ -129,7 +129,7 @@ defmodule ExSchedulerTest do
         |> Process.info(:registered_name)
         |> elem(1)
 
-      assert scheduler_name == ExSchedulerTest.TestSchedule
+      assert scheduler_name == ExScheduleTest.TestSchedule
     end
 
     test "when name and namespace are given it registers with the name" do
@@ -150,7 +150,7 @@ defmodule ExSchedulerTest do
 
       {:ok, scheduler} = Subject.start_link(namespace: namespace)
 
-      name = :"#{ExSchedulerTest.TestSchedule}.#{namespace}"
+      name = :"#{ExScheduleTest.TestSchedule}.#{namespace}"
 
       scheduler_name =
         scheduler
