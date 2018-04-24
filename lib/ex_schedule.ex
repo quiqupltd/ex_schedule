@@ -1,4 +1,4 @@
-defmodule ExScheduler do
+defmodule ExSchedule do
   @moduledoc """
   Module providing a way to declare actions happening on an interval basis.
 
@@ -6,7 +6,7 @@ defmodule ExScheduler do
 
   ```
   defmodule Quiqup.Schedules.Developer do
-    use ExScheduler
+    use ExSchedule
 
     schedule every: {6, :hours} do
       Developer.eat(:pizza)
@@ -67,7 +67,7 @@ defmodule ExScheduler do
 
       use Supervisor
 
-      import ExScheduler
+      import ExSchedule
 
       @doc "Starts the Schedule with the given arguments"
       @spec start_link(list()) :: GenServer.on_start()
@@ -116,14 +116,14 @@ defmodule ExScheduler do
       defp normalize_namespace(ns), do: ns
 
       defp child_spec(schedule) do
-        worker(ExScheduler.ScheduledTask, [schedule], id: schedule.id)
+        worker(ExSchedule.ScheduledTask, [schedule], id: schedule.id)
       end
 
       defp name(nil, nil), do: __MODULE__
       defp name(nil, ns), do: :"#{__MODULE__}.#{ns}"
       defp name(name, _namespace), do: name
 
-      @before_compile ExScheduler
+      @before_compile ExSchedule
     end
   end
 
@@ -149,8 +149,8 @@ defmodule ExScheduler do
                    module: __MODULE__,
                    name: unquote(options)[:name],
                    max_failures: unquote(options)[:max_failures] || :infinity,
-                   interval: ExScheduler.interval(unquote(options)[:every]),
-                   first_in: ExScheduler.interval(unquote(options)[:first_in]) || 0
+                   interval: ExSchedule.interval(unquote(options)[:every]),
+                   first_in: ExSchedule.interval(unquote(options)[:first_in]) || 0
                  })
     end
   end

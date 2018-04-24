@@ -1,4 +1,4 @@
-# ExScheduler Code of Conduct
+# ExSchedule Code of Conduct
 
 ## Our Pledge
 
