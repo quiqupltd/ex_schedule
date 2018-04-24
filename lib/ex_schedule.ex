@@ -2,10 +2,10 @@ defmodule ExSchedule do
   @moduledoc """
   Module providing a way to declare actions happening on an interval basis.
 
-  Example
+  Defining a schedule
 
   ```
-  defmodule Quiqup.Schedules.Developer do
+  defmodule YourApp.Schedules.Developer do
     use ExSchedule
 
     schedule every: {6, :hours} do
@@ -14,6 +14,23 @@ defmodule ExSchedule do
 
     schedule every: :hour, first_in: {20, :minutes} do
       Developer.drink(:coffee)
+    end
+  end
+  ```
+
+  Adding the schedule to the supervision tree
+
+  ```
+  defmodule YourApp.Application do
+    use Application
+
+    import Supervisor.Spec
+
+    def start(_type, _args) do
+      opts = [strategy: :one_for_one, name: YourApp.Supervisor]
+      children = [supervisor(YourApp.Schedules.Developer, [[name: :developer_schedule]])]
+
+      Supervisor.start_link(children, opts)
     end
   end
   ```

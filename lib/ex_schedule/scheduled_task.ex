@@ -23,7 +23,7 @@ defmodule ExSchedule.ScheduledTask do
     {:ok, %State{schedule: schedule}}
   end
 
-  @doc "Returns statistcs for the given task process"
+  @doc "Returns statistics for the given task process"
   @spec stats(pid()) :: %{runs: integer(), failures: integer(), last_completed_in: nil | number()}
   def stats(pid), do: GenServer.call(pid, :stats)
 
