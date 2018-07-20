@@ -42,7 +42,7 @@ defmodule ExSchedule.Mixfile do
       files: ["lib", "mix.exs", "README.md", ".formatter.exs"],
       maintainers: ["Dimitris Zorbas", "Luiz Varela"],
       licenses: ["MIT"],
-      links: %{github: "https://github.com/QuiqUpLTD/ex_schedule"}
+      links: %{github: "https://github.com/quiqupltd/ex_schedule"}
     ]
   end
 end
