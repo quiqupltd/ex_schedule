@@ -4,8 +4,8 @@ defmodule ExSchedule.Mixfile do
   def project do
     [
       app: :ex_schedule,
-      version: "0.1.0",
-      elixir: "~> 1.5",
+      version: "0.2.0",
+      elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       name: "ExSchedule"
@@ -23,7 +23,7 @@ defmodule ExSchedule.Mixfile do
   defp deps do
     [
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:credo, "~> 0.9.1", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 end

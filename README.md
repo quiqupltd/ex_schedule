@@ -10,7 +10,7 @@ by adding `ex_schedule` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ex_schedule, "~> 0.1.0"}
+    {:ex_schedule, "~> 0.2.0"}
   ]
 end
 ```
