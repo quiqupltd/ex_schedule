@@ -100,7 +100,7 @@ defmodule ExSchedule do
 
       @doc false
       def init(opts) do
-        schedules() |> Enum.map(&child_spec/1) |> supervise(strategy: :one_for_one)
+        schedules() |> Enum.map(&child_spec/1) |> Supervisor.init(strategy: :one_for_one)
       end
 
       @doc "Returns the namespace of the schedule"
@@ -133,7 +133,7 @@ defmodule ExSchedule do
       defp normalize_namespace(ns), do: ns
 
       defp child_spec(schedule) do
-        worker(ExSchedule.ScheduledTask, [schedule], id: schedule.id)
+        %{id: schedule.id, start: {ExSchedule.ScheduledTask, :start_link, [schedule]}}
       end
 
       defp name(nil, nil), do: __MODULE__

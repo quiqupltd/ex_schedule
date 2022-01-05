@@ -18,7 +18,7 @@ The package can be installed by adding `ex_schedule` to your list of dependencie
 ```elixir
 def deps do
   [
-    {:ex_schedule, "~> 0.1"}
+    {:ex_schedule, "~> 0.2.0"}
   ]
 end
 ```
